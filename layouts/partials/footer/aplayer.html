@@ -1,0 +1,64 @@
+<!-- require APlayer -->
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<div id="aplayer"></div>
+
+<script>
+const home = {{.Site.Home.Permalink}};
+console.log(home);
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    fixed: true,
+    lrcType: 3,
+    audio: [{
+        name: '是但求其爱',
+        artist: '陈奕迅',
+        url: home + 'music/是但求其爱/是但求其爱.mp3',
+        cover: home + 'music/是但求其爱/封面.jpg',
+        lrc: home + 'music/是但求其爱/是但求其爱.lrc'
+    },
+{
+        name: '致明日的舞',
+        artist: '陈奕迅',
+        url: home + 'music/致明日的舞/致明日的舞.mp3',
+        cover: home + 'music/致明日的舞/封面.jpg',
+        lrc: home + 'music/致明日的舞/致明日的舞.lrc'
+    }]
+});
+
+    /**
+     * 页面销毁前监听
+     */
+    window.onbeforeunload = () => {
+        // 将播放信息用对象封装，并存入到localStorage中
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.paused
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    /**
+     * 页面加载后监听
+     */
+    window.onload = () => {
+        // 从localStorage取出播放信息
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        // 切换歌曲
+        ap.list.switch(playInfo.index);
+        // 等待500ms再执行下一步(切换歌曲需要点时间，不能立马调歌曲进度条)
+        setTimeout(() => {
+            // 调整时长
+            ap.seek(playInfo.currentTime);
+            // 是否播放
+            if (!playInfo.paused) {
+                ap.play()
+            }
+        }, 500);
+    };
+</script>
