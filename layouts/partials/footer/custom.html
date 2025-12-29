@@ -1,1 +1,19 @@
 {{ partialCached "footer/aplayer.html" . }}
+<style>
+  @font-face {
+    font-family: '相思体';
+    src: url({{ (resources.Get "font/巧致.ttf").Permalink }}) format('truetype');
+  }
+
+  :root {
+    --base-font-family: '相思体';
+    --code-font-family: '相思体';
+  }
+</style>
+<style>
+  body {
+    background: url({{ (resources.Get "background/背景.jpg").Permalink }}) no-repeat center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>
