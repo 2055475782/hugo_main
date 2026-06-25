@@ -2,7 +2,7 @@
 title: "五一！"
 description: "五一拍照"
 date: 2026-06-25T10:00:00+08:00
-image: "图片1.jpg"
+image: "DSC04114.jpg"
 slug: "五一"
 categories:
   - "日常"
